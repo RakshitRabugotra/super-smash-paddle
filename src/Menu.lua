@@ -41,19 +41,25 @@ function Menu:init(options)
     end
 end
 
-function Menu:update(dt)
+function Menu:update(dt, disableMenuMovement)
+    --[[
+        param:
+            disableMenuMovement: (boolean) If true, user can't cycle through the options
+    ]]
 
     -- Cycle through the menu
-    if love.keyboard.wasPressed(self.upKey[1]) or love.keyboard.wasPressed(self.upKey[2]) then
-        -- Play the select sound
-        gSounds:stop('select')
-        gSounds:play('select')
-        self.highlighted = (self.highlighted <= 1) and self.max or self.highlighted - 1
-    elseif love.keyboard.wasPressed(self.downKey[1]) or love.keyboard.wasPressed(self.downKey[2]) then
-        -- Play the select sound
-        gSounds:stop('select')
-        gSounds:play('select')
-        self.highlighted = (self.highlighted >= self.max) and 1 or self.highlighted + 1
+    if not disableMenuMovement then
+        if love.keyboard.wasPressed(self.upKey[1]) or love.keyboard.wasPressed(self.upKey[2]) then
+            -- Play the select sound
+            gSounds:stop('select')
+            gSounds:play('select')
+            self.highlighted = (self.highlighted <= 1) and self.max or self.highlighted - 1
+        elseif love.keyboard.wasPressed(self.downKey[1]) or love.keyboard.wasPressed(self.downKey[2]) then
+            -- Play the select sound
+            gSounds:stop('select')
+            gSounds:play('select')
+            self.highlighted = (self.highlighted >= self.max) and 1 or self.highlighted + 1
+        end
     end
 
     -- Choose the confirmed option

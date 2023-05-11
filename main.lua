@@ -124,6 +124,7 @@ function love.load()
         ['choose-game-mode'] = function() return ChooseGameModeState() end,
         ['tips-credits'] = function() return TipsNCredits() end,
         ['control-mapping'] = function() return ControlMappingState() end,
+        ['get-control-input'] = function() return GetControlInputState() end
     }
     gStateMachine:change('title', {
         ball = ball,
@@ -160,6 +161,11 @@ function love.keypressed(key)
     -- For enterting debug mode
     if key == 'f3' then
         DEBUG_MODE = not DEBUG_MODE
+    end
+
+    -- For entering the fullscreen mode
+    if key == CONTROLS.FULLSCREEN then
+        toggleFullscreen()
     end
 
     -- Registering the key pressed

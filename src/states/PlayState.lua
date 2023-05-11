@@ -61,7 +61,7 @@ function PlayState:update(dt)
     end
 
     -- For pausing the game
-    if love.keyboard.wasPressed('p') then
+    if love.keyboard.wasPressed(CONTROLS.PAUSE) then
         gStateMachine:change('pause', {
             ball = self.ball,
             player1 = self.player1,
@@ -76,7 +76,7 @@ function PlayState:update(dt)
     end
 
     -- For reseting the game (debug only)
-    if love.keyboard.wasPressed('r') and DEBUG_MODE then
+    if love.keyboard.wasPressed(DEBUG.HOTKEY) and DEBUG.IS_ON then
         gStateMachine:change('serve', {
             ball = self.ball,
             player1 = self.player1,
