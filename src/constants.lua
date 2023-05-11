@@ -44,8 +44,12 @@ COLORS = {
     DEBUG = {212/255, 175/255, 55/255, 1},  -- Color used in debug console
     DEFAULT = {1, 1, 1, 1},                 -- White
     NEUTRAL = {0.5, 0.5, 0.5, 0.5},         -- Grey with 0.5 alpha
-    PAUSED = {0, 1, 0, 1},                  -- Green
+    PAUSED = {8/255, 89/255, 11/255, 1},    -- Dull Green
     PAUSED_SCREEN_COLOR = {1, 1, 0, 0.2},   -- Redish
+    PAUSED_MENU_CHOOSE = {
+        ACTIVE = {48/255, 242/255, 41/255, 1},      -- Bright Green
+        INACTIVE = {28/255, 105/255, 49/255, 0.2},  -- Dark Green
+    },
     PLAYER_1 = TRANSITION_COLORS[math.random(1, 6)],                -- Random color for our player
     PLAYER_2 = TRANSITION_COLORS[math.random(1, 6)],                -- Random color for our player
     MENU_CHOOSE = {
