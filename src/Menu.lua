@@ -6,9 +6,13 @@ Menu = Class{}
 function Menu:init(options)
     --[[
         The 'options' will be a table of tables
-        -- The inner table will contain two values
-        -- -- The 'first' value would be the name of the option
-        -- -- The 'second' value would be the action of the option
+        -- The inner table will contain three values
+           -- The 'first' value would be the name of the option
+           -- The 'second' value would be the action of the option
+           -- The 'third' value would be a boolean, 
+              -- nil if the option is NOT a toggle option (ON/OFF)
+              -- else, the default state of the toggle can be given as string
+
     ]]
     self.options = options
 
@@ -20,6 +24,21 @@ function Menu:init(options)
     -- The control keys
     self.upKey = {PLAYER['1'].controls.up, PLAYER['2'].controls.up}
     self.downKey = {PLAYER['1'].controls.down, PLAYER['2'].controls.down}
+
+    -- Go through the options and modify the toggle options' name
+    for i, pair in ipairs(self.options) do
+        local originalName = pair[1]
+        local action = pair[2]
+        local toggleState = pair[3]
+
+        -- If the option is not a toggle then skip
+        if toggleState == nil then goto continue end
+
+        -- Else we will check the state of the toggle
+        self.options[i] = {originalName .. ": " .. tostring(toggleState), action, toggleState, originalName}
+
+        ::continue::
+    end
 end
 
 function Menu:update(dt)
@@ -44,12 +63,21 @@ function Menu:update(dt)
         gSounds:play('confirm')
 
         for i, pair in ipairs(self.options) do
-            local name = pair[1]
             local action = pair[2]
+            local toggleState = pair[3]
 
-            if i == self.highlighted then
+            -- If the action is direct and not a toggle
+            if i == self.highlighted and toggleState == nil then
                 action()
                 break
+            end
+
+            -- If the action is toggle, then execute the toggle function
+            -- and rename the option-name accordingly
+            if i == self.highlighted and toggleState ~= nil then
+                local newState = action()
+                local originalName = pair[4]
+                self.options[i] = {originalName .. ": " .. tostring(newState), action, toggleState, originalName}
             end
         end
     end
