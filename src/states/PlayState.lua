@@ -25,13 +25,6 @@ function PlayState:enter(params)
 
     -- Set the corner bonus // if defined in the params
     self.corner_bonus = params.corner_bonus or self.corner_bonus
-
-    -- if we're entering from a pause state, then play the exit point in za-warudo
-    if params.from_paused and GAME.SETTINGS.ZA_WARUDO then
-        -- Za-warudo
-        gSounds:stop('za-warudo-20-sec-exit')
-        gSounds:play('za-warudo-20-sec-exit')
-    end
 end
 
 function PlayState:update(dt)
