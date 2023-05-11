@@ -81,7 +81,7 @@ function SettingsState:render()
         the gameplay
     ]]
 
-    -- The game title
+    -- The state title
     love.graphics.setColor(self.color)
     love.graphics.setFont(gFonts['large'])
 
