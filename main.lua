@@ -77,11 +77,14 @@ function love.load()
         -- Background Music
         ['bg-music'] = love.audio.newSource('sounds/music/background_music.wav', 'stream'),
     }
+    -- Set the global volume
+    gSounds:setGlobalVolume(GAME.SETTINGS.SOUND_EFFECTS_VOLUME)
+
     -- kick off music if we have to 
-    gSounds:get('bg-music'):setVolume(GAME.SETTINGS.BG_MUSIC_VOLUME)
-    gSounds:get('bg-music'):setLooping(true)
     if GAME.SETTINGS.BG_MUSIC then
-        gSounds:play('bg-music')
+        gSounds:get('bg-music'):setVolume(GAME.SETTINGS.BG_MUSIC_VOLUME)
+        gSounds:get('bg-music'):setLooping(true)
+        gSounds:get('bg-music'):play()
     end
 
     --[[
