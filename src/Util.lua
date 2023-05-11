@@ -183,9 +183,11 @@ function displayFPS()
     love.graphics.setColor(COLORS.DEFAULT)
 end
 -- For toggling fullscreen
-function toggleFullscreen(fullscreen)
-    love.window.setFullscreen(fullscreen, 'desktop')
+function toggleFullscreen()
+    GAME.SETTINGS.FULLSCREEN = not GAME.SETTINGS.FULLSCREEN
+    love.window.setFullscreen(GAME.SETTINGS.FULLSCREEN, 'desktop')
     love.resize(love.graphics.getDimensions())
+    return GAME.SETTINGS.FULLSCREEN
 end
 -- For changing BackgroundMusic
 function toggleBackgroundMusic()

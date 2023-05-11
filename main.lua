@@ -155,11 +155,6 @@ function love.keypressed(key)
     if key == 'f3' then
         DEBUG_MODE = not DEBUG_MODE
     end
-    -- For toggling fullscreen
-    if key == 'f' or key == 'f11' then
-        FULLSCREEN = not FULLSCREEN
-        toggleFullscreen(FULLSCREEN)
-    end
 
     -- Registering the key pressed
     love.keyboard.keysPressed[key] = true
