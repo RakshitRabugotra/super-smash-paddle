@@ -16,13 +16,15 @@ GAME = {
         'COM v COM'
     },
     SETTINGS = {
-        BG_MUSIC = false,
+        BG_MUSIC = true,
         ZA_WARUDO = true,
         SOUND_EFFECTS = true,
         VSYNC = true,
         FULLSCREEN = false,
         RESIZABLE = true,
         BG_MUSIC_VOLUME = 0.3,
+        SOUND_EFFECTS_VOLUME = 0.7,
+        PAUSED_MENU_VOLUME = 0.5,
     },
     WIN_SCORE = 10,
     SCORE_INCREMENT = 1,
