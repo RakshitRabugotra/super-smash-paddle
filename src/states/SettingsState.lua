@@ -10,6 +10,14 @@ function SettingsState:init()
         Options to toggle will be,
     ]]
     self.menu = Menu {
+        {'Control Mappigs', function()
+            -- Transition to the control mapping state
+            gStateMachine:change('control-mapping', {
+                ball = self.ball,
+                player1 = self.player1,
+                player2 = self.player2
+            })
+        end},
         {'Fullscreen', function()
             return toggleFullscreen() and "ON" or "OFF"
         end, (GAME.SETTINGS.FULLSCREEN) and "ON" or "OFF"},
