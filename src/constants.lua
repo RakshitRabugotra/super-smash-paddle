@@ -16,7 +16,7 @@ GAME = {
         'COM v COM'
     },
     SETTINGS = {
-        BG_MUSIC = true,
+        BG_MUSIC = false,
         ZA_WARUDO = true,
         SOUND_EFFECTS = true,
         VSYNC = true,
@@ -30,6 +30,27 @@ GAME = {
     SCORE_INCREMENT = 1,
     CORNER_INCREMENT = 3,
     CORNER_THRESHOLD = 10,
+}
+
+-- The controls for our game
+CONTROLS = {
+    FULLSCREEN = 'f',
+    PAUSE = 'p',
+    PLAYER = {
+        [1] = {
+            up = 'w',
+            down = 's'
+        },
+        [2] = {
+            up = 'up',
+            down = 'down'
+        }
+    },
+    VALID_KEYS = {
+        'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z',
+        '1','2','3','4','5','6','7','8','9','0',
+        'up', 'down', 'left', 'right'
+    }
 }
 
 TRANSITION_COLORS = {
@@ -98,14 +119,17 @@ PADDLE.AI = {
 }
 
 -- For debug purposes
-DEBUG_MODE = false
+DEBUG = {
+    IS_ON = false,
+    HOTKEY = '`'
+}
 
 -- Key mappings
 PLAYER = {
     ['1'] = {
         controls = {
-            up = 'w',
-            down = 's'
+            up = CONTROLS.PLAYER[1].up,
+            down = CONTROLS.PLAYER[1].down
         },
         color = COLORS.PLAYER_1,
         x_constraint = 0,
@@ -113,8 +137,8 @@ PLAYER = {
     },
     ['2'] = {
         controls = {
-            up = 'up',
-            down = 'down'
+            up = CONTROLS.PLAYER[2].up,
+            down = CONTROLS.PLAYER[2].down
         },
         color = COLORS.PLAYER_2,
         x_constraint = VIRTUAL_WIDTH - PADDLE.WIDTH,
