@@ -108,6 +108,7 @@ function love.load()
         ['title'] = function() return TitleState() end,
         ['serve'] = function() return ServeState() end,
         ['play'] = function() return PlayState() end,
+        ['pause'] = function() return PauseState() end
         ['win'] = function() return WinState() end,
         
         --[[
@@ -116,8 +117,7 @@ function love.load()
         ['settings'] = function() return SettingsState() end,
         ['choose-game-mode'] = function() return ChooseGameModeState() end,
         ['tips-credits'] = function() return TipsNCredits() end,
-        -- Adding a pause state
-        ['pause'] = function() return PauseState() end
+        ['control-mapping'] = function() return ControlMappingState() end,
     }
     gStateMachine:change('title', {
         ball = ball,
