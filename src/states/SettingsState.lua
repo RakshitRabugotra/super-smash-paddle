@@ -3,6 +3,8 @@
 ]]
 SettingsState = Class{__includes = BaseState}
 
+require 'src/Util'
+
 function SettingsState:init()
     --[[
         Options to toggle will be,
@@ -45,26 +47,36 @@ end
 
 function SettingsState:update(dt)
 
+    -- The up and down keys for the player control
+    local upKey = {
+        PLAYER['1'].controls.up,
+        PLAYER['2'].controls.up
+    }
+    local downKey = {
+        PLAYER['1'].controls.down,
+        PLAYER['2'].controls.down
+    }
+
     -- If the user presses the ENTER or RETURN key, then transition accordinagly
     if love.keyboard.wasPressed('enter') or love.keyboard.wasPressed('return') then
+
+        -- play the confirm sound
+        gSounds:stop('confirm')
+        gSounds:play('confirm')
+
         if self.highlighted == 1 then
-            -- play the confirm sound
-            gSounds:stop('confirm')
-            gSounds:play('confirm')
+            -- Control Mapping state
+            gStateMachine:change('control-mapping', {})
+
+        if self.highlighted == 1 then
             -- Toggle Background music
-            self:toggleBackgroundMusic()
+            toggleBackgroundMusic()
             
         elseif self.highlighted == 2 then
-            -- play the confirm sound
-            gSounds:stop('confirm')
-            gSounds:play('confirm')
             -- Toggle Sound effects
-            self:toggleSoundEffects()
+            toggleSoundEffects()
 
         elseif self.highlighted == 3 then
-            -- play the confirm sound
-            gSounds:stop('confirm')
-            gSounds:play('confirm')
             -- Transition to the credits and tips
             gStateMachine:change('title', {
                 ball = self.ball,
@@ -75,14 +87,14 @@ function SettingsState:update(dt)
     end
 
     -- We will cycle the value of self.highlighted between those two
-    if love.keyboard.wasPressed('up') or love.keyboard.wasPressed('w') then
+    if love.keyboard.wasPressed(upKey[1]) or love.keyboard.wasPressed(upKey[2]) then
         -- Play the select sound
         gSounds:stop('select')
         gSounds:play('select')
         self.highlighted = (self.highlighted > 1) and self.highlighted - 1 or 3
     end
 
-    if love.keyboard.wasPressed('down') or love.keyboard.wasPressed('s') then
+    if love.keyboard.wasPressed(downKey[1]) or love.keyboard.wasPressed(downKey[2]) then
         -- Play the select sound
         gSounds:stop('select')
         gSounds:play('select')
@@ -138,26 +150,3 @@ function SettingsState:render()
     love.graphics.setColor(COLORS.DEFAULT)
 end
 
-
--- For changing BackgroundMusic
-function SettingsState:toggleBackgroundMusic()
-    GAME.SETTINGS.BG_MUSIC = not GAME.SETTINGS.BG_MUSIC
-    -- If the BG_MUSIC is turned off then stop the music
-    if GAME.SETTINGS.BG_MUSIC then
-        gSounds:play('bg-music')
-    else
-        gSounds:stop('bg-music')
-    end
-end
--- For changing SoundEffects
-function SettingsState:toggleSoundEffects()
-    GAME.SETTINGS.SOUND_EFFECTS = not GAME.SETTINGS.SOUND_EFFECTS
-end
--- For changing Vysnc
-function SettingsState:toggleVysnc()
-    GAME.SETTINGS.VSYNC = not GAME.SETTINGS.VSYNC
-end
--- For changing ZaWarudo
-function SettingsState:toggleZaWarudo()
-    GAME.SETTINGS.ZA_WARUDO = not GAME.SETTINGS.ZA_WARUDO
-end
