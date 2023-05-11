@@ -9,7 +9,7 @@ function TitleState:init()
     self.colors = TRANSITION_COLORS
 
     -- time for a color change if it's been half a second
-    self.colorTimer = Timer.every(0.5, function()
+    self.colorTimer = Timer.every(1, function()
         
         -- shift every color to the next, looping the last to front
         -- assign it to 0 so the loop below moves it to 1, default start
