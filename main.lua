@@ -69,7 +69,7 @@ function love.load()
         ['za-warudo-20-sec-loop'] = love.audio.newSource('sounds/SFX/za_warudo_20_seconds_loop.mp3', 'static'), -- 9 seconds
         ['za-warudo-20-sec-exit'] = love.audio.newSource('sounds/SFX/za_warudo_20_seconds_exit.mp3', 'static'), -- 3 seconds
         -- Winning Music
-        ['victory'] = love.audio.newSource('sounds/SFX/victory.mp3', 'stream'),
+        ['victory'] = love.audio.newSource('sounds/SFX/victory.mp3', 'static'),
 
         --[[
             Music
@@ -77,9 +77,12 @@ function love.load()
         -- Background Music
         ['bg-music'] = love.audio.newSource('sounds/music/background_music.wav', 'stream'),
     }
-    -- kick off music
+    -- kick off music if we have to 
+    gSounds:get('bg-music'):setVolume(GAME.SETTINGS.BG_MUSIC_VOLUME)
     gSounds:get('bg-music'):setLooping(true)
-    gSounds:play('bg-music')
+    if GAME.SETTINGS.BG_MUSIC then
+        gSounds:play('bg-music')
+    end
 
     --[[
         Initialize the ball
