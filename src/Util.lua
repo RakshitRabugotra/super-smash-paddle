@@ -198,7 +198,7 @@ function toggleBackgroundMusic()
         gSounds:get('bg-music'):setLooping(true)
         gSounds:get('bg-music'):play()
     else
-        gSounds:stop('bg-music')
+        gSounds:pause('bg-music')
     end
     return GAME.SETTINGS.BG_MUSIC
 end
