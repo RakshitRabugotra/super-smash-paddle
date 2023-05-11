@@ -90,18 +90,18 @@ function love.load()
     --[[
         Initialize the ball
     ]]
-    ball = Ball()
+    local ball = Ball()
 
     --[[
         Initializing the two players
     ]]
-    player1 = Paddle {
+    local player1 = Paddle {
         name = 'Player 1',
         player = PLAYER['1'],
         score = 0
     }
 
-    player2 = Paddle {
+    local player2 = Paddle {
         name = 'Player 2',
         player = PLAYER['2'],
         score = 0
