@@ -147,12 +147,12 @@ end
 ]]
 
 function PlayState:checkAndPerformBallCollision()
-    if self.ball:collides(player1) then
+    if self.ball:collides(self.player1) then
         self.player1.defensive_hit = self.player1.defensive_hit + 1
 
         -- Checking the defensive hits of the paddle
         if self.player1.defensive_hit % PADDLE.DECREMENT_ON_HIT == 0 and self.player1.defensive_hit ~= 0 then
-            self.player1.height = player1.height - PADDLE.HEIGHT_DECREMENT
+            self.player1.height = self.player1.height - PADDLE.HEIGHT_DECREMENT
         end
 
         self.ball.dx = -self.ball.dx * (1 + BALL.SPEED_INCREMENT_PRECENTAGE/100)
@@ -160,7 +160,7 @@ function PlayState:checkAndPerformBallCollision()
         -- Play the sound cue
         if GAME.SETTINGS.SOUND_EFFECTS then gSounds:play('paddle_hit') end
 
-    elseif self.ball:collides(player2) then
+    elseif self.ball:collides(self.player2) then
         self.player2.defensive_hit = self.player2.defensive_hit + 1
 
         -- Checking the defensive hits of the paddle
