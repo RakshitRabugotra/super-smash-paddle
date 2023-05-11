@@ -108,7 +108,7 @@ function love.load()
         ['title'] = function() return TitleState() end,
         ['serve'] = function() return ServeState() end,
         ['play'] = function() return PlayState() end,
-        ['pause'] = function() return PauseState() end
+        ['pause'] = function() return PauseState() end,
         ['win'] = function() return WinState() end,
         
         --[[
