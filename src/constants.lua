@@ -36,16 +36,10 @@ GAME = {
 CONTROLS = {
     FULLSCREEN = 'f',
     PAUSE = 'p',
-    PLAYER = {
-        [1] = {
-            up = 'w',
-            down = 's'
-        },
-        [2] = {
-            up = 'up',
-            down = 'down'
-        }
-    },
+    PLAYER1_UP = 'w',
+    PLAYER1_DOWN = 's',
+    PLAYER2_UP = 'up',
+    PLAYER2_DOWN = 'down',
     VALID_KEYS = {
         'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z',
         '1','2','3','4','5','6','7','8','9','0',
@@ -128,8 +122,8 @@ DEBUG = {
 PLAYER = {
     ['1'] = {
         controls = {
-            up = CONTROLS.PLAYER[1].up,
-            down = CONTROLS.PLAYER[1].down
+            up = CONTROLS.PLAYER1_UP,
+            down = CONTROLS.PLAYER1_DOWN
         },
         color = COLORS.PLAYER_1,
         x_constraint = 0,
@@ -137,8 +131,8 @@ PLAYER = {
     },
     ['2'] = {
         controls = {
-            up = CONTROLS.PLAYER[2].up,
-            down = CONTROLS.PLAYER[2].down
+            up = CONTROLS.PLAYER2_UP,
+            down = CONTROLS.PLAYER2_DOWN
         },
         color = COLORS.PLAYER_2,
         x_constraint = VIRTUAL_WIDTH - PADDLE.WIDTH,
