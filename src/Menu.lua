@@ -84,8 +84,11 @@ function Menu:update(dt)
 
 end
 
-function Menu:render(offsetY, fontSize, spacingFactor)
+function Menu:render(offsetY, fontSize, spacingFactor, activeColor, inactiveColor)
     -- We will render the menu in the middle of the screen
+
+    activeColor = activeColor or COLORS.MENU_CHOOSE.ACTIVE
+    inactiveColor = inactiveColor or COLORS.MENU_CHOOSE.INACTIVE
 
     -- If the spacing factor is not given then
     spacingFactor = spacingFactor or 1.5
@@ -97,10 +100,10 @@ function Menu:render(offsetY, fontSize, spacingFactor)
         -- The name of the action
         local name = pair[1]
 
-        love.graphics.setColor(COLORS.MENU_CHOOSE.INACTIVE)
+        love.graphics.setColor(inactiveColor)
         -- If we've selected the current option, then give it a highlighted color
         if(i == self.highlighted) then
-            love.graphics.setColor(COLORS.MENU_CHOOSE.ACTIVE)
+            love.graphics.setColor(activeColor)
         end
         -- Print the option
         love.graphics.printf(tostring(name), 0, offsetY + spacingFactor*i*gFontSize[fontSize], VIRTUAL_WIDTH, 'center')
