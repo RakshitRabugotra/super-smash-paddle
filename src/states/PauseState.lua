@@ -3,6 +3,9 @@
 ]]
 PauseState = Class{__includes = BaseState}
 
+-- For utility functions
+require 'src/Util'
+
 function PauseState:init()
     if not GAME.SETTINGS.ZA_WARUDO then return end
 
@@ -18,6 +21,9 @@ function PauseState:init()
 
     -- The menu highlight color
     self.highlighted = 1
+
+    -- Set the global volume to half
+    gSounds:setGlobalVolume(GAME.SETTINGS.PAUSED_MENU_VOLUME)
 
     Timer.tween(1, {
         -- Entering in the Pause state
@@ -41,11 +47,52 @@ function PauseState:init()
         end
     end)
 
+
+    -- Create the menu
+    self.menu = Menu {
+        {"Resume", function()
+            -- Stop the music
+            gSounds:stop('za-warudo-20-sec-loop')
+            -- Reset the volume
+            gSounds:setGlobalVolume(GAME.SETTINGS.SOUND_EFFECTS_VOLUME)
+            -- Unpause the game
+            self:unpause()
+        end},
+
+        {"Main Menu", function()
+            -- Stop the music
+            gSounds:stop('za-warudo-20-sec-loop')
+
+            -- Also reset the player and ball
+            self.player1:reset()
+            self.player2:reset()
+            self.ball:reset()
+            
+            -- Play the exit sound
+            gSounds:play('za-warudo-20-sec-exit')
+            
+            -- Reset the volume
+            gSounds:setGlobalVolume(GAME.SETTINGS.SOUND_EFFECTS_VOLUME)
+
+            -- Back to the main menu
+            gStateMachine:change('title', {
+                ball = self.ball,
+                player1 = self.player1,
+                player2 = self.player2
+            })
+        end},
+    }
+
 end
 
 function PauseState:enter(params)
-    -- Stop the bg-music
-    gSounds:pause('bg-music')
+    -- Was the background music on?
+    self.wasBGMOn = GAME.SETTINGS.BG_MUSIC
+
+    -- If the background music is playing then toggle it off
+    if self.wasBGMOn then
+        toggleBackgroundMusic()
+    end
 
     if GAME.SETTINGS.ZA_WARUDO then
         -- Za-warudo
@@ -77,10 +124,11 @@ function PauseState:exit()
         gSounds:play('pause-boom')
     end
 
-    if GAME.SETTINGS.BG_MUSIC then
-        -- Resume the bg-music
-        gSounds:play('bg-music')
+    -- If the game music was on, then resume
+    if self.wasBGMOn then
+        toggleBackgroundMusic()
     end
+
 
     -- Loose the access to playstate instance
     self.playstate_instance = nil
@@ -94,62 +142,17 @@ function PauseState:update(dt)
     -- Updating the timer for wa-zarudo
     if GAME.SETTINGS.ZA_WARUDO then Timer.update(dt) end
 
-    -- --[[
-    --     If we press 'p' then unpause the game
-    -- ]]
-    -- if love.keyboard.wasPressed('p') then
-    --     self:unpause()
-    -- end
-
     -- If the timer hasn't begun, then don't let the player move in the menu
     if not self.canChooseOption then
         return
     end
 
-    -- If the user presses the ENTER or RETURN key, then transition accordinagly
     if love.keyboard.wasPressed('enter') or love.keyboard.wasPressed('return') then
-
-        -- So that we can't change the option midway our transition
         self.canChooseOption = false
-
-        -- Stop the time-loop sound
-        gSounds:stop('za-warudo-20-sec-loop')
-        -- Play the exit sound
-        gSounds:play('za-warudo-20-sec-exit')
-
-        if self.highlighted == 1 then
-            -- play the confirm sound
-            gSounds:stop('confirm')
-            gSounds:play('confirm')
-            self:unpause()
-
-        elseif self.highlighted == 2 then
-            -- play the confirm sound
-            gSounds:stop('confirm')
-            gSounds:play('confirm')
-            -- Back to the main menu
-            gStateMachine:change('title', {
-                ball = self.ball,
-                player1 = self.player1,
-                player2 = self.player2
-            })
-        end
-    end
-    
-    -- We will cycle the value of self.highlighted between those two
-    if love.keyboard.wasPressed('up') or love.keyboard.wasPressed('w') then
-        -- Play the select sound
-        gSounds:stop('select')
-        gSounds:play('select')
-        self.highlighted = (self.highlighted > 1) and self.highlighted - 1 or 2
     end
 
-    if love.keyboard.wasPressed('down') or love.keyboard.wasPressed('s') then
-        -- Play the select sound
-        gSounds:stop('select')
-        gSounds:play('select')
-        self.highlighted = (self.highlighted < 2) and self.highlighted + 1 or 1
-    end
+    -- Update the menu controls
+    self.menu:update(dt)
 end
 
 function PauseState:render()
@@ -177,22 +180,7 @@ function PauseState:render()
     --[[
         The options
     ]]
-    love.graphics.setFont(gFonts['medium'])
-    love.graphics.setColor(menuInactiveColor)
-
-    if self.highlighted == 1 then
-        love.graphics.setColor(menuActiveColor)
-    end
-    -- Printing option 1
-    love.graphics.printf("Resume", 0, VIRTUAL_HEIGHT/2 + 4*gFontSize['medium'], VIRTUAL_WIDTH, 'center')
-
-    -- Set the color to inactive
-    love.graphics.setColor(menuInactiveColor)
-    if self.highlighted == 2 then
-        love.graphics.setColor(menuActiveColor)
-    end
-    -- Printing option 2
-    love.graphics.printf("Main Menu", 0, VIRTUAL_HEIGHT/2 + 6*gFontSize['medium'], VIRTUAL_WIDTH, 'center')
+    self.menu:render(VIRTUAL_HEIGHT/2 + gFontSize['medium'], 'medium', 2, menuActiveColor, menuInactiveColor)
 
     -- Revert to original colors
     love.graphics.setColor(COLORS.DEFAULT)
@@ -205,6 +193,9 @@ function PauseState:unpause()
     -- We will make a sweet transition
     paused_opacity = 1
     neutral_opacity = 1
+
+    -- Play the exit sound
+    gSounds:play('za-warudo-20-sec-exit')
 
     -- Transition the opacity
     Timer.tween(2, {
