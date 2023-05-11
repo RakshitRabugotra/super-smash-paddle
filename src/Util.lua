@@ -187,6 +187,28 @@ function toggleFullscreen(fullscreen)
     love.window.setFullscreen(fullscreen, 'desktop')
     love.resize(love.graphics.getDimensions())
 end
+-- For changing BackgroundMusic
+function toggleBackgroundMusic()
+    GAME.SETTINGS.BG_MUSIC = not GAME.SETTINGS.BG_MUSIC
+    -- If the BG_MUSIC is turned off then stop the music
+    if GAME.SETTINGS.BG_MUSIC then
+        gSounds:play('bg-music')
+    else
+        gSounds:stop('bg-music')
+    end
+end
+-- For changing SoundEffects
+function toggleSoundEffects()
+    GAME.SETTINGS.SOUND_EFFECTS = not GAME.SETTINGS.SOUND_EFFECTS
+end
+-- For changing Vysnc
+function toggleVysnc()
+    GAME.SETTINGS.VSYNC = not GAME.SETTINGS.VSYNC
+end
+-- For changing ZaWarudo
+function toggleZaWarudo()
+    GAME.SETTINGS.ZA_WARUDO = not GAME.SETTINGS.ZA_WARUDO
+end
 
 function displayDebugConsole()
     love.graphics.setFont(gFonts['small'])
