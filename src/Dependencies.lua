@@ -13,6 +13,7 @@ Timer = require 'lib/knife.timer'
 -- For utlity functions
 require 'src/Util'
 require 'src/Sounds'
+require 'src/Menu'
 
 -- Import the paddle and ball class
 require 'src/Paddle'
@@ -29,3 +30,4 @@ require 'src/states/PlayState'
 require 'src/states/WinState'
 require 'src/states/PauseState'
 require 'src/states/SettingsState'
+require 'src/states/ControlMappingState'
