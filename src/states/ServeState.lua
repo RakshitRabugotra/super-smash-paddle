@@ -62,12 +62,8 @@ function ServeState:update(dt)
     end
 
     -- update the players only!
-    if not(self.game_mode == GAME.MODES[3]) then
-        self.player1:update(dt)
-    end
-    if self.game_mode == GAME.MODES[1] then
-        self.player2:update(dt)
-    end
+    self.player1:update(dt)
+    self.player2:update(dt)
 end
 
 function ServeState:render()
