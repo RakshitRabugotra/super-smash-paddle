@@ -196,18 +196,22 @@ function toggleBackgroundMusic()
     else
         gSounds:stop('bg-music')
     end
+    return GAME.SETTINGS.BG_MUSIC
 end
 -- For changing SoundEffects
 function toggleSoundEffects()
     GAME.SETTINGS.SOUND_EFFECTS = not GAME.SETTINGS.SOUND_EFFECTS
+    return GAME.SETTINGS.SOUND_EFFECTS
 end
 -- For changing Vysnc
 function toggleVysnc()
     GAME.SETTINGS.VSYNC = not GAME.SETTINGS.VSYNC
+    return GAME.SETTINGS.VSYNC
 end
 -- For changing ZaWarudo
 function toggleZaWarudo()
     GAME.SETTINGS.ZA_WARUDO = not GAME.SETTINGS.ZA_WARUDO
+    return GAME.SETTINGS.ZA_WARUDO
 end
 
 function displayDebugConsole()
