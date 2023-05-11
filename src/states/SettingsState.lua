@@ -10,7 +10,7 @@ function SettingsState:init()
         Options to toggle will be,
     ]]
     self.menu = Menu {
-        {'Control Mappigs', function()
+        {'Control Mappings', function()
             -- Transition to the control mapping state
             gStateMachine:change('control-mapping', {
                 ball = self.ball,
@@ -88,7 +88,7 @@ function SettingsState:render()
     love.graphics.printf("Settings", 0, VIRTUAL_HEIGHT/2 - 3*gFontSize['large'], VIRTUAL_WIDTH, 'center')
 
     -- Render the menu
-    self.menu:render((VIRTUAL_HEIGHT/2)*0.85, 'medium')
+    self.menu:render((VIRTUAL_HEIGHT/2)*0.65, 'medium')
 
     -- Set the color to default
     love.graphics.setColor(COLORS.DEFAULT)
