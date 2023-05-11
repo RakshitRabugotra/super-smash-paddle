@@ -194,7 +194,9 @@ function toggleBackgroundMusic()
     GAME.SETTINGS.BG_MUSIC = not GAME.SETTINGS.BG_MUSIC
     -- If the BG_MUSIC is turned off then stop the music
     if GAME.SETTINGS.BG_MUSIC then
-        gSounds:play('bg-music')
+        gSounds:get('bg-music'):setVolume(GAME.SETTINGS.BG_MUSIC_VOLUME)
+        gSounds:get('bg-music'):setLooping(true)
+        gSounds:get('bg-music'):play()
     else
         gSounds:stop('bg-music')
     end
